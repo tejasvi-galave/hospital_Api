@@ -1,0 +1,9 @@
+
+ 
+ @Controller
+ public class petientCotrl {
+	 public String name() {
+		return"create";
+	}
+ }
+ 

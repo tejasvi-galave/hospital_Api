@@ -1,0 +1,12 @@
+package com.hospital.management.cotrl;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+ public class DemoContrl {
+	@GetMapping("/hello")
+	 public String name() {
+		return"create";
+	}
+ }
+ 

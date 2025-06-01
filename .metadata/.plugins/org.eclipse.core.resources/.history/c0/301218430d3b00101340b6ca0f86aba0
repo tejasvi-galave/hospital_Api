@@ -1,0 +1,13 @@
+package com.hospital.management.hospital_MVC;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HospitalMvcApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HospitalMvcApplication.class, args);
+	}
+
+}

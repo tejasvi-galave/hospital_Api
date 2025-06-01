@@ -1,0 +1,12 @@
+package com.hospital.management.hospital_MVC;
+
+
+
+@SpringBootTest
+class HospitalMvcApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}

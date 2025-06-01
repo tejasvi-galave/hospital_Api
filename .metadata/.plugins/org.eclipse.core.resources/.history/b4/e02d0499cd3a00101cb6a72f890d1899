@@ -1,0 +1,9 @@
+package com.hospital.management.hospital_MVC.cntrl;
+
+public class Snippet {
+	spring.mvc.view.prefix= /WEB-INF/jsp/
+	spring.mvc.view.suffix= .jsp
+	server.port=8080
+	
+}
+
