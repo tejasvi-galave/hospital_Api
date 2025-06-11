@@ -1,4 +1,4 @@
-package com.hospital.loginDto;
+package com.hospital.SignUpDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequestDto {
+public class SignUpReqDto {
 	private int id;
-	private String username;
+	private String name;
+	private String email;
 	private String password;
+	private String phone;
+	private String role;
 
 }

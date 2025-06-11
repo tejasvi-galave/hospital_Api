@@ -14,14 +14,14 @@ public class LoginMapper {
 //		return new Login(loginRequestDto.getId(), loginRequestDto.getUserName(), loginRequestDto.getPassword());
 		Login login = new Login();
 		login.setId(loginRequestDto.getId());
-		login.setUserName(loginRequestDto.getUserName());
+		login.setUsername(loginRequestDto.getUsername());
 		login.setPassword(loginRequestDto.getPassword());
 		return login;
 	}
 
 	public LoginResponseDto toResponseDto(String userName, String role) {
 		LoginResponseDto loginResponseDto = new LoginResponseDto();
-		loginResponseDto.setUserName(userName);
+		loginResponseDto.setUsername(userName);
 		loginResponseDto.setRole(role);
 		return loginResponseDto;
 

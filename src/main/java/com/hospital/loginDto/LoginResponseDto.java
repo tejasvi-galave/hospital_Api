@@ -1,16 +1,13 @@
 package com.hospital.loginDto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponseDto {
-	private String userName;
-	private String password;
+	private String username;
 	private String role;
 }
