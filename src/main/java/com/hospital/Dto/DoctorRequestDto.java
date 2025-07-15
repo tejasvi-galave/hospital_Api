@@ -25,4 +25,5 @@ public class DoctorRequestDto {
 	private LocalTime fromTime;
 	@DateTimeFormat(pattern = "H:M")
 	private LocalTime toTime;
+
 }

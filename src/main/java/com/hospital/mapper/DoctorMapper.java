@@ -15,6 +15,7 @@ public class DoctorMapper {
 	}
 
 	public DoctorResponseDto toDto(Doctor doctor) {
+
 		DoctorResponseDto dto = new DoctorResponseDto();
 		dto.setId(doctor.getId());
 		dto.setFirstName(doctor.getFirstName());
@@ -26,6 +27,11 @@ public class DoctorMapper {
 		dto.setFromTime(doctor.getFromTime());
 		dto.setToTime(doctor.getToTime());
 		return dto;
+
+		DoctorResponseDto toList = new DoctorResponseDto(doctor.getId(), doctor.getFirstName(), doctor.getLastName(),
+				doctor.getPhone(), doctor.getEmail(), doctor.getDepartment(), doctor.getSpeciality(),
+				doctor.getFromTime(), doctor.getToTime());
+		return toList;
 
 	}
 

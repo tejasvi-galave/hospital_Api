@@ -20,12 +20,20 @@ public class DoctorController {
 	DoctorService doctorService;
 
 	@PostMapping("/add")
-	public boolean saveDoctor(@RequestBody DoctorRequestDto doctorDto) {
+	public String saveDoctor(@RequestBody DoctorRequestDto doctorDto) {
 		System.out.println(doctorDto.getPhone());
 		System.out.println(doctorDto.getFirstName());
 		boolean isAdded = doctorService.saveDoctor(doctorDto);
-		return isAdded;
+
+		return "doctor added sucessfully";
 	}
+
+	@GetMapping("/getallRecord")
+	public List<DoctorResponseDto> getAllDoctor() {
+		List<DoctorResponseDto> doctorList = doctorService.getAllDoctor();
+		return doctorList;
+	}
+
 
 	@GetMapping("/getallRecord")
 	public List<DoctorResponseDto> getAllDoctor() {
@@ -42,4 +50,13 @@ public class DoctorController {
 		boolean isAdded = doctorService.updateDoctor(doctorDto);
 		return isAdded;
 	}
+
+	@PostMapping("/updateRecord")
+	public String updateDoctor(@RequestBody DoctorRequestDto doctorDto) {
+		System.out.println(doctorDto.getFirstName());
+		doctorService.updateDoctor(doctorDto);
+		return "doctor updated sucessfull";
+	}
+
+
 }

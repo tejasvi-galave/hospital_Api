@@ -24,6 +24,8 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Autowired
 	DoctorMapper doctorMapper;
+	@Autowired
+	LoginRepository loginRepository;
 
 	@Autowired
 	LoginRepository loginRepository;
@@ -33,6 +35,7 @@ public class DoctorServiceImpl implements DoctorService {
 	public boolean saveDoctor(DoctorRequestDto doctorDto) {
 		Doctor doctor = doctorMapper.toEntity(doctorDto);
 		try {
+
 			doctorRepository.save(doctor);
 
 			Login login = new Login();
@@ -64,6 +67,14 @@ public class DoctorServiceImpl implements DoctorService {
 		Doctor doctor = doctorMapper.toEntity(doctorDto);
 		try {
 			doctorRepository.save(doctor);
+
+			Doctor addedLogin = doctorRepository.save(doctor);
+			Login login = new Login();
+			login.setUsername(addedLogin.getEmail());
+			login.setPassword("demo");
+			login.setRole("doctor");
+			loginRepository.save(login);
+
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,4 +83,26 @@ public class DoctorServiceImpl implements DoctorService {
 
 	}
 
+	public List<DoctorResponseDto> getAllDoctor() {
+		Iterable<Doctor> allDoctors = doctorRepository.findAll();
+		List<DoctorResponseDto> toList = new ArrayList<DoctorResponseDto>();
+		for (Doctor doctor : allDoctors) {
+			DoctorResponseDto doctorResDto = doctorMapper.toDto(doctor);
+			toList.add(doctorResDto);
+		}
+		return toList;
+	}
+
+	@Override
+	public boolean updateDoctor(DoctorRequestDto doctorDto) {
+		Doctor doctor = doctorMapper.toEntity(doctorDto);
+		try {
+			Doctor addedLogin = doctorRepository.save(doctor);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
 }

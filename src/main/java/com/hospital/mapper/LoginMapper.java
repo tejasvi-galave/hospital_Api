@@ -21,7 +21,9 @@ public class LoginMapper {
 
 	public LoginResponseDto toResponseDto(int id, String userName, String role) {
 		LoginResponseDto loginResponseDto = new LoginResponseDto();
+
 		loginResponseDto.setId(id);
+
 		loginResponseDto.setUsername(userName);
 		loginResponseDto.setRole(role);
 		return loginResponseDto;
