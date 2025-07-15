@@ -19,8 +19,11 @@ public class LoginMapper {
 		return login;
 	}
 
-	public LoginResponseDto toResponseDto(String userName, String role) {
+	public LoginResponseDto toResponseDto(int id, String userName, String role) {
 		LoginResponseDto loginResponseDto = new LoginResponseDto();
+
+		loginResponseDto.setId(id);
+
 		loginResponseDto.setUsername(userName);
 		loginResponseDto.setRole(role);
 		return loginResponseDto;
