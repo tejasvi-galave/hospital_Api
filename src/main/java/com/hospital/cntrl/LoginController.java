@@ -16,7 +16,7 @@ public class LoginController {
 
 	@PostMapping("/checkAccount")
 	public LoginResponseDto checkExistAccount(@RequestBody LoginRequestDto loginRequestDto) {
-		System.out.println(loginRequestDto.getUserName() + "");
+		System.out.println(loginRequestDto.getUsername() + "");
 		LoginResponseDto responseDto = loginService.checkExistAccount(loginRequestDto);
 		return responseDto;
 

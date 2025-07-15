@@ -22,17 +22,17 @@ public class LoginServiceImpl implements LoginService {
 	public LoginResponseDto checkExistAccount(LoginRequestDto loginRequestDto) {
 		// convert dto into login
 		Login login = loginMapper.toEntity(loginRequestDto);
-		System.out.println(login.getUserName());
-		System.out.println(loginRequestDto.getUserName());
+		System.out.println(login.getUsername());
+		System.out.println(loginRequestDto.getUsername());
 		System.out.println(loginRequestDto.getPassword());
 		// get data in db
-		Login existingUser = loginRepository.findByLoginDetails(loginRequestDto.getUserName(),
+		Login existingUser = loginRepository.findByLoginDetails(loginRequestDto.getUsername(),
 				loginRequestDto.getPassword());
 		System.out.println(existingUser.getPassword() + " " + existingUser.getRole());
 		if (existingUser != null) {
 			// that entity data conver into response dto in using login mapper class and
 			// then return response
-			LoginResponseDto responseDto = loginMapper.toResponseDto(existingUser.getUserName(),
+			LoginResponseDto responseDto = loginMapper.toResponseDto(existingUser.getId(), existingUser.getUsername(),
 					existingUser.getRole());
 
 			return responseDto;

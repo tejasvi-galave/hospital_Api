@@ -16,20 +16,37 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_table")
-public class Login {
+@Table(name = "patients")
+public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "username")
-	private String username;
+	@Column(name = "name")
+	private String name;
 
-	@Column(name = "password")
-	private String password;
+	@Column(name = "age")
+	private int age;
 
-	@Column(name = "role")
-	private String role;
+	@Column(name = "gender")
+	private String gender;
 
+	@Column(name = "phone")
+	private String phone;
+
+	@Column(name = "bloodgroup")
+	private String bloodGroup;
+
+	@Column(name = "address")
+	private String address;
+
+	@Column(name = "medical_history")
+	private String medicalHistory;
+
+	@Column(name = "user_id")
+	private int userId;
+
+	@Column(name = "status")
+	private String status;
 }

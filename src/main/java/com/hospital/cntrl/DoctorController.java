@@ -1,12 +1,16 @@
 package com.hospital.cntrl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hospital.Dto.DoctorRequestDto;
+import com.hospital.Dto.DoctorResponseDto;
 import com.hospital.service.DoctorService;
 
 @RestController
@@ -20,6 +24,22 @@ public class DoctorController {
 		System.out.println(doctorDto.getPhone());
 		System.out.println(doctorDto.getFirstName());
 		boolean isAdded = doctorService.saveDoctor(doctorDto);
+		return isAdded;
+	}
+
+	@GetMapping("/getallRecord")
+	public List<DoctorResponseDto> getAllDoctor() {
+		List<DoctorResponseDto> doctorList = doctorService.getAllDoctor();
+		for (DoctorResponseDto doctor : doctorList) {
+			System.out.println(doctor.getFirstName());
+			System.out.println(doctor.getSpeciality());
+		}
+		return doctorList;
+	}
+
+	@PostMapping("/update")
+	public boolean updateDoctor(@RequestBody DoctorRequestDto doctorDto) {
+		boolean isAdded = doctorService.updateDoctor(doctorDto);
 		return isAdded;
 	}
 }
