@@ -33,24 +33,11 @@ public class DoctorController {
 		List<DoctorResponseDto> doctorList = doctorService.getAllDoctor();
 		return doctorList;
 	}
-	/*
-	 * @GetMapping("/getallRecord") public List<DoctorResponseDto> getAllDoctor() {
-	 * List<DoctorResponseDto> doctorList = doctorService.getAllDoctor(); for
-	 * (DoctorResponseDto doctor : doctorList) {
-	 * System.out.println(doctor.getFirstName());
-	 * System.out.println(doctor.getSpeciality()); } return doctorList; }
-	 */
 
 	@PostMapping("/update")
 	public boolean updateDoctor(@RequestBody DoctorRequestDto doctorDto) {
 		boolean isAdded = doctorService.updateDoctor(doctorDto);
 		return isAdded;
 	}
-
-	/*
-	 * @PostMapping("/updateRecord") public String updateDoctor(@RequestBody
-	 * DoctorRequestDto doctorDto) { System.out.println(doctorDto.getFirstName());
-	 * doctorService.updateDoctor(doctorDto); return "doctor updated sucessfull"; }
-	 */
 
 }
