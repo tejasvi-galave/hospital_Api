@@ -14,6 +14,7 @@ import com.hospital.service.LoginService;
 
 @Service
 public class LoginServiceImpl implements LoginService {
+
 	@Autowired
 	LoginMapper loginMapper;
 
@@ -22,40 +23,24 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public LoginResponseDto checkExistAccount(LoginRequestDto loginRequestDto) {
-		// convert dto into login
-		Login login = loginMapper.toEntity(loginRequestDto);
-
-		System.out.println(login.getUsername());
+		// Log incoming data
 		System.out.println(loginRequestDto.getUsername());
 		System.out.println(loginRequestDto.getPassword());
-		// get data in db
-		Login existingUser = loginRepository.findByLoginDetails(loginRequestDto.getUsername(),
 
-//		System.out.println(login.getUsername());
-//		System.out.println(loginRequestDto.getUsername());
-//		System.out.println(loginRequestDto.getPassword());
-		// get data in db
+		// Check if user exists in DB
 		Optional<Login> opt = loginRepository.findByLoginDetails(loginRequestDto.getUsername(),
-
 				loginRequestDto.getPassword());
-//		System.out.println(existingUser.getPassword() + " " + existingUser.getRole());
+
 		if (opt.isPresent()) {
-			// that entity data conver into response dto in using login mapper class and
-			// then return response
-
-			LoginResponseDto responseDto = loginMapper.toResponseDto(existingUser.getId(), existingUser.getUsername(),
-					existingUser.getRole());
-
-			return responseDto;
-		} else {
-			return null;
-=======
 			Login logedUser = opt.get();
-			LoginResponseDto loginData = loginMapper.toResponseDto(logedUser.getUsername(), logedUser.getRole());
+
+			// Map entity to response DTO and return
+			LoginResponseDto loginData = loginMapper.toResponseDto(logedUser.getId(), logedUser.getUsername(),
+					logedUser.getRole());
+
 			return loginData;
-
+		} else {
+			return null; // or throw custom exception
 		}
-		return null;
-
 	}
 }

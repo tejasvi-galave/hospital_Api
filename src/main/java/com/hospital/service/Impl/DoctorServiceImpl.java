@@ -2,6 +2,7 @@ package com.hospital.service.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,6 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Autowired
 	DoctorMapper doctorMapper;
-	@Autowired
-	LoginRepository loginRepository;
-
 	@Autowired
 	LoginRepository loginRepository;
 
@@ -64,45 +62,54 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public boolean updateDoctor(DoctorRequestDto doctorDto) {
-		Doctor doctor = doctorMapper.toEntity(doctorDto);
 		try {
-			doctorRepository.save(doctor);
+			// Fetch the existing doctor from DB using ID (you must pass it in the DTO)
+			Optional<Doctor> existingOpt = doctorRepository.findById(doctorDto.getId());
 
-			Doctor addedLogin = doctorRepository.save(doctor);
-			Login login = new Login();
-			login.setUsername(addedLogin.getEmail());
-			login.setPassword("demo");
-			login.setRole("doctor");
-			loginRepository.save(login);
+			if (existingOpt.isEmpty()) {
+				return false; // Doctor not found
+			}
+
+			Doctor existingDoctor = existingOpt.get();
+			String oldEmail = existingDoctor.getEmail();
+
+			// Update doctor fields using new DTO data
+			Doctor updatedDoctor = doctorMapper.toEntity(doctorDto);
+			Doctor savedDoctor = doctorRepository.save(updatedDoctor);
+
+			// If email is changed, update the Login table
+			if (!oldEmail.equals(savedDoctor.getEmail())) {
+				Optional<Login> loginOpt = loginRepository.findByUsername(oldEmail);
+				if (loginOpt.isPresent()) {
+					Login login = loginOpt.get();
+					login.setUsername(savedDoctor.getEmail()); // update new email
+					loginRepository.save(login);
+				}
+			}
 
 			return true;
+
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
-
 	}
 
-	public List<DoctorResponseDto> getAllDoctor() {
-		Iterable<Doctor> allDoctors = doctorRepository.findAll();
-		List<DoctorResponseDto> toList = new ArrayList<DoctorResponseDto>();
-		for (Doctor doctor : allDoctors) {
-			DoctorResponseDto doctorResDto = doctorMapper.toDto(doctor);
-			toList.add(doctorResDto);
-		}
-		return toList;
-	}
-
-	@Override
-	public boolean updateDoctor(DoctorRequestDto doctorDto) {
-		Doctor doctor = doctorMapper.toEntity(doctorDto);
-		try {
-			Doctor addedLogin = doctorRepository.save(doctor);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-
-	}
 }
+
+/*
+ * public List<DoctorResponseDto> getAllDoctor() { Iterable<Doctor> allDoctors =
+ * doctorRepository.findAll(); List<DoctorResponseDto> toList = new
+ * ArrayList<DoctorResponseDto>(); for (Doctor doctor : allDoctors) {
+ * DoctorResponseDto doctorResDto = doctorMapper.toDto(doctor);
+ * toList.add(doctorResDto); } return toList; }
+ */
+
+/*
+ * @Override public boolean updateDoctor(DoctorRequestDto doctorDto) { Doctor
+ * doctor = doctorMapper.toEntity(doctorDto); try { Doctor addedLogin =
+ * doctorRepository.save(doctor); return true; } catch (Exception e) {
+ * e.printStackTrace(); } return false;
+ * 
+ * }
+ */

@@ -15,5 +15,7 @@ public interface LoginRepository extends CrudRepository<Login, Integer> {
 	@Query(value = "SELECT * FROM user_table WHERE username = :username AND password = :password", nativeQuery = true)
 	Optional<Login> findByLoginDetails(@Param("username") String username, @Param("password") String password);
 
+	Optional<Login> findByUsername(String email);
+
 //	Login findByUsernameAndPassword(String username, String password);
 }
