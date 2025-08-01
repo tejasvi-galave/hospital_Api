@@ -16,4 +16,6 @@ public interface DoctorService {
 
 	boolean updateDoctor(DoctorRequestDto doctorDto);
 
+	DoctorResponseDto findByEmail(String email);
+
 }

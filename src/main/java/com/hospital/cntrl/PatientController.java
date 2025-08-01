@@ -25,7 +25,7 @@ public class PatientController {
 
 	@PostMapping("/add")
 	public boolean addPatient(@RequestBody PatientReqDto patientsReqDto) {
-		System.out.println(patientsReqDto.getUserId());
+
 		boolean isAdded = patientService.addPatient(patientsReqDto);
 		return isAdded;
 	}
@@ -37,17 +37,18 @@ public class PatientController {
 		return patientService.findPatientsByuserId(userId, pageable);
 	}
 
-	@GetMapping("/getInactiveRecord/{userId}")
-	public List<PatientResDto> findInactivePatientByUserId(@PathVariable int userId) {
-		System.out.println("the id is:" + userId);
-		List<PatientResDto> list = patientService.findInactivePatientByUserId(userId);
+	@GetMapping("/getInactiveRecord/{userId}/{page}/{size}")
+	public PageResponse<PatientResDto> findInactivePatientByUserId(@PathVariable int userId, @PathVariable int page,
+			@PathVariable int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		PageResponse<PatientResDto> list = patientService.findInactivePatientByUserId(userId, pageable);
 		return list;
 	}
 
 	@GetMapping("/getpatientById/{id}")
 	public PatientResDto patientById(@PathVariable int id) {
 		PatientResDto patientResDto = patientService.patientById(id);
-		System.out.println(patientResDto.getAddress());
+
 		return patientResDto;
 	}
 

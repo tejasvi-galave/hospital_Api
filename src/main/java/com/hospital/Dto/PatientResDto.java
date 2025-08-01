@@ -18,6 +18,5 @@ public class PatientResDto {
 	private String bloodGroup;
 	private String address;
 	private String medicalHistory;
-//	private int userId;
-//	private String status;
+
 }
