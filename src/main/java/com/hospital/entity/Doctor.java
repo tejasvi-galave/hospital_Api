@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "doctors") // Table name in DB
+@Table(name = "doctors")
 public class Doctor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,4 +52,9 @@ public class Doctor {
 	@JsonFormat(pattern = "HH:mm")
 	@Column(name = "to_time")
 	private LocalTime toTime;
+
+	public Doctor(int doctorId) {
+		this.id = doctorId;
+	}
+
 }

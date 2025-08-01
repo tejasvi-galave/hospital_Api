@@ -18,6 +18,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "patients")
 public class Patient {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -49,4 +50,9 @@ public class Patient {
 
 	@Column(name = "status")
 	private String status;
+
+	public Patient(int id) {
+		this.id = id;
+	}
+
 }
