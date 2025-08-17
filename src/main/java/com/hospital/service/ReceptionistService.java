@@ -16,4 +16,10 @@ public interface ReceptionistService {
 
 	boolean update(ReceptionistReqDto receptionistReqDto);
 
+	long getReceptionistCount();
+
+	ReceptionistResDto ReceptionistById(int id);
+
+	List<ReceptionistResDto> findAllReceptionistByUserId(int userId);
+
 }

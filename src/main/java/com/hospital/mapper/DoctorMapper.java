@@ -10,7 +10,8 @@ import com.hospital.entity.Doctor;
 public class DoctorMapper {
 	public Doctor toEntity(DoctorRequestDto dto) {
 		Doctor doctor = new Doctor(dto.getId(), dto.getFirstName(), dto.getLastName(), dto.getPhone(), dto.getEmail(),
-				dto.getDepartment(), dto.getSpeciality(), dto.getFromTime(), dto.getToTime());
+				dto.getDepartment(), dto.getSpeciality(), dto.getFromTime(), dto.getToTime(), dto.getUserId(),
+				dto.getStatus());
 		return doctor;
 	}
 
@@ -18,7 +19,7 @@ public class DoctorMapper {
 
 		DoctorResponseDto toList = new DoctorResponseDto(doctor.getId(), doctor.getFirstName(), doctor.getLastName(),
 				doctor.getPhone(), doctor.getEmail(), doctor.getDepartment(), doctor.getSpeciality(),
-				doctor.getFromTime(), doctor.getToTime());
+				doctor.getFromTime(), doctor.getToTime(), doctor.getStatus());
 		return toList;
 
 	}

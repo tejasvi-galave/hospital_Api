@@ -171,4 +171,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return result;
 	}
 
+	@Override
+	public long getDoctorCount() {
+		return appointmentRepository.count();
+	}
+
 }

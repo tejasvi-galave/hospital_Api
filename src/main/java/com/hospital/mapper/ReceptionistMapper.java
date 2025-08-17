@@ -16,6 +16,9 @@ public class ReceptionistMapper {
 		entity.setEmail(dto.getEmail());
 		entity.setPhone(dto.getPhone());
 		entity.setDob(dto.getDob());
+		entity.setUserId(dto.getUserId());
+		entity.setStatus(dto.getStatus());
+
 		return entity;
 	}
 
@@ -26,6 +29,7 @@ public class ReceptionistMapper {
 		dto.setEmail(entity.getEmail());
 		dto.setPhone(entity.getPhone());
 		dto.setDob(entity.getDob());
+		dto.setStatus(entity.getStatus());
 		return dto;
 	}
 }

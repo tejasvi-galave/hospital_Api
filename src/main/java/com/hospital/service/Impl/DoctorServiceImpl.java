@@ -32,6 +32,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public boolean saveDoctor(DoctorRequestDto doctorDto) {
 		Doctor doctor = doctorMapper.toEntity(doctorDto);
+		doctor.setStatus("Active");
 		try {
 
 			doctorRepository.save(doctor);
@@ -50,10 +51,11 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public List<DoctorResponseDto> getAllDoctor() {
-		Iterable<Doctor> allDoctors = doctorRepository.findAll();
-		List<DoctorResponseDto> toList = new ArrayList<DoctorResponseDto>();
-		for (Doctor doctor : allDoctors) {
+	public List<DoctorResponseDto> getAllDoctor(int userId) {
+		Iterable<Doctor> activeDoctors = doctorRepository.findByUserIdAndStatus(userId, "ACTIVE");
+
+		List<DoctorResponseDto> toList = new ArrayList<>();
+		for (Doctor doctor : activeDoctors) {
 			DoctorResponseDto doctorResDto = doctorMapper.toDto(doctor);
 			toList.add(doctorResDto);
 		}
@@ -91,6 +93,45 @@ public class DoctorServiceImpl implements DoctorService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public DoctorResponseDto findByEmail(String email) {
+		Optional<Doctor> doctor = doctorRepository.findByEmail(email);
+		if (doctor.isPresent()) {
+			Doctor result = doctor.get();
+			DoctorResponseDto doctorResDto = doctorMapper.toDto(result);
+			return doctorResDto;
+
+		}
+		return null;
+	}
+
+	@Override
+	public List<DoctorResponseDto> getAllDoctor() {
+		Iterable<Doctor> allDoctors = doctorRepository.findByStatus("active");
+		List<DoctorResponseDto> toList = new ArrayList<DoctorResponseDto>();
+		for (Doctor doctor : allDoctors) {
+			DoctorResponseDto doctorResDto = doctorMapper.toDto(doctor);
+			toList.add(doctorResDto);
+		}
+		return toList;
+	}
+
+	@Override
+	public long getDoctorCount() {
+		return doctorRepository.count();
+	}
+
+	@Override
+	public DoctorResponseDto DoctorById(int id) {
+		Optional<Doctor> doctor = doctorRepository.findById(id);
+		if (doctor.isPresent()) {
+			Doctor result = doctor.get();
+			DoctorResponseDto doctorDto = doctorMapper.toDto(result);
+			return doctorDto;
+		}
+		return null;
 	}
 
 }

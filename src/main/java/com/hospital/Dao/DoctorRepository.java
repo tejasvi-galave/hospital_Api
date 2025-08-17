@@ -17,4 +17,8 @@ public interface DoctorRepository extends CrudRepository<Doctor, Integer> {
 
 	Optional<Doctor> findByEmail(String email);
 
+	Iterable<Doctor> findByUserIdAndStatus(int userId, String status);
+
+	Iterable<Doctor> findByStatus(String status);
+
 }

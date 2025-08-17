@@ -26,6 +26,7 @@ public class PatientMapper {
 		dto.setBloodGroup(patient.getBloodGroup());
 		dto.setAddress(patient.getAddress());
 		dto.setMedicalHistory(patient.getMedicalHistory());
+		dto.setStatus(patient.getStatus());
 		return dto;
 	}
 

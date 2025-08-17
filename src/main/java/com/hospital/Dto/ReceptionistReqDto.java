@@ -15,4 +15,6 @@ public class ReceptionistReqDto {
 	private String email;
 	private String phone;
 	private String dob;
+	private int userId;
+	private String status;
 }

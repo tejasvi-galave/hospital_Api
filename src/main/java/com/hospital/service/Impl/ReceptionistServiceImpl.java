@@ -33,6 +33,7 @@ public class ReceptionistServiceImpl implements ReceptionistService {
 	public boolean saveReceptionist(ReceptionistReqDto receptionistReqDto) {
 		try {
 			Receptionist receptionist = receptionistMapper.toEntity(receptionistReqDto);
+			receptionist.setStatus("Active");
 			receptionistRepository.save(receptionist);
 			Login login = new Login();
 			login.setUsername(receptionist.getEmail());
@@ -44,15 +45,6 @@ public class ReceptionistServiceImpl implements ReceptionistService {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	@Override
-	public List<ReceptionistResDto> findAllReceptionist() {
-		List<Receptionist> receptionist = (List<Receptionist>) receptionistRepository.findAll();
-
-		List<ReceptionistResDto> dtoList = receptionist.stream()
-				.map(receptionistList -> receptionistMapper.toResDto(receptionistList)).collect(Collectors.toList());
-		return dtoList;
 	}
 
 	@Override
@@ -86,6 +78,41 @@ public class ReceptionistServiceImpl implements ReceptionistService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public long getReceptionistCount() {
+		return receptionistRepository.count();
+	}
+
+	@Override
+	public ReceptionistResDto ReceptionistById(int id) {
+		Optional<Receptionist> receptionist = receptionistRepository.findById(id);
+		if (receptionist.isPresent()) {
+			Receptionist result = receptionist.get();
+			ReceptionistResDto receptionistResDto = receptionistMapper.toResDto(result);
+			return receptionistResDto;
+		}
+		return null;
+	}
+
+	@Override
+	public List<ReceptionistResDto> findAllReceptionist() {
+		List<Receptionist> receptionist = (List<Receptionist>) receptionistRepository.findByStatus("ACTIVE");
+
+		List<ReceptionistResDto> dtoList = receptionist.stream()
+				.map(receptionistList -> receptionistMapper.toResDto(receptionistList)).collect(Collectors.toList());
+		return dtoList;
+	}
+
+	@Override
+	public List<ReceptionistResDto> findAllReceptionistByUserId(int userId) {
+		List<Receptionist> receptionist = (List<Receptionist>) receptionistRepository.findByUserIdAndStatus(userId,
+				"ACTIVE");
+
+		List<ReceptionistResDto> dtoList = receptionist.stream()
+				.map(receptionistList -> receptionistMapper.toResDto(receptionistList)).collect(Collectors.toList());
+		return dtoList;
 	}
 
 }

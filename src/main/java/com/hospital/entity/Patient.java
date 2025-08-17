@@ -21,38 +21,37 @@ public class Patient {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", nullable = false)
 	private int id;
 
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "age")
+	@Column(name = "age", nullable = false)
 	private int age;
 
-	@Column(name = "gender")
+	@Column(name = "gender", nullable = false)
 	private String gender;
 
-	@Column(name = "phone")
+	@Column(name = "phone", nullable = false)
 	private String phone;
 
-	@Column(name = "bloodgroup")
+	@Column(name = "bloodgroup", nullable = false)
 	private String bloodGroup;
 
-	@Column(name = "address")
+	@Column(name = "address", nullable = false)
 	private String address;
 
-	@Column(name = "medical_history")
+	@Column(name = "medical_history", nullable = false)
 	private String medicalHistory;
 
-	@Column(name = "user_id")
+	@Column(name = "user_id", nullable = false)
 	private int userId;
 
-	@Column(name = "status")
+	@Column(name = "status", nullable = false)
 	private String status;
 
 	public Patient(int id) {
 		this.id = id;
 	}
-
 }

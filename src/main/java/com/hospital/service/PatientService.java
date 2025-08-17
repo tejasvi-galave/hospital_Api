@@ -18,7 +18,7 @@ public interface PatientService {
 
 	boolean updatePatient(PatientReqDto patientsReqDto);
 
-	List<PatientResDto> findInactivePatientByUserId(int userId);
+	PageResponse<PatientResDto> findInactivePatientByUserId(int userId, Pageable pageable);
 
 	List<PatientResDto> searchPatientByNameAndUserId(String name, String status, int userId);
 
@@ -29,5 +29,7 @@ public interface PatientService {
 	List<PatientResDto> searchAllPatientByName(String name, String status);
 
 	PageResponse<PatientResDto> findAllInActivePatient(Pageable pageable);
+
+	long getPatientsCount();
 
 }
