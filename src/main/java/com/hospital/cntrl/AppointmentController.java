@@ -88,4 +88,9 @@ public class AppointmentController {
 			@PathVariable int doctorId) {
 		return appointmentService.searchAppointmentByPhoneAndDoctorId(phone, doctorId);
 	}
+
+	@GetMapping("/count")
+	public long getAppointmentCount() {
+		return appointmentService.getDoctorCount();
+	}
 }

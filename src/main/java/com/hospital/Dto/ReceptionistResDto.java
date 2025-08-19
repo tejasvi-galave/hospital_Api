@@ -15,4 +15,5 @@ public class ReceptionistResDto {
 	private String email;
 	private String phone;
 	private String dob;
+	private String status;
 }

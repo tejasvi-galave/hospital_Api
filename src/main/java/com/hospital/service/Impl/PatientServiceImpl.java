@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.hospital.Dao.AppointmentRepository;
+import com.hospital.Dao.DiagnosisRepository;
 import com.hospital.Dao.PatientRepository;
 import com.hospital.Dto.PageResponse;
 import com.hospital.Dto.PatientReqDto;
@@ -22,9 +24,13 @@ import com.hospital.service.PatientService;
 public class PatientServiceImpl implements PatientService {
 	@Autowired
 	PatientRepository patientRepository;
-
+	@Autowired
+	AppointmentRepository appointmentRepository;
 	@Autowired
 	PatientMapper patientMapper;
+
+	@Autowired
+	DiagnosisRepository diagnosisRepository;
 
 	@Override
 	public boolean addPatient(PatientReqDto patientsReqDto) {
@@ -54,27 +60,39 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public boolean updatePatient(PatientReqDto patientsReqDto) {
-		Patient patients = patientMapper.toEntity(patientsReqDto);
 		try {
-			patientRepository.save(patients);
+
+			Patient patient = patientMapper.toEntity(patientsReqDto);
+
+			Patient savedPatient = patientRepository.save(patient);
+
+			if ("Inactive".equalsIgnoreCase(savedPatient.getStatus())) {
+				appointmentRepository.updateAppointmentsByPatientId(savedPatient.getId(), "Inactive");
+				diagnosisRepository.updateDiagnosisByPatientId(savedPatient.getId(), "Inactive");
+			}
+
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	@Override
-	public List<PatientResDto> findInactivePatientByUserId(int userId) {
-		List<Patient> patients = patientRepository.findByUserIdAndStatus(userId, "Inactive");
-		List<PatientResDto> result = new ArrayList<>();
-
-		for (Patient patient : patients) {
-			PatientResDto dto = patientMapper.toDto(patient);
-			result.add(dto);
+	public PageResponse findInactivePatientByUserId(int userId, Pageable pageable) {
+		Page<Patient> pageData = patientRepository.findByUserIdAndStatus(userId, "Inactive", pageable);
+		List<PatientResDto> dtoList = new ArrayList<>();
+		for (Patient p : pageData.getContent()) {
+			dtoList.add(patientMapper.toDto(p));
 		}
+		PageResponse<PatientResDto> response = new PageResponse<>();
+		response.setContent(dtoList);
+		response.setCurrentPage(pageData.getNumber());
+		response.setPageSize(pageData.getSize());
+		response.setTotalPages(pageData.getTotalPages());
+		response.setTotalElements(pageData.getTotalElements());
 
-		return result;
+		return response;
 	}
 
 	@Override
@@ -154,6 +172,11 @@ public class PatientServiceImpl implements PatientService {
 		response.setTotalElements(pageData.getTotalElements());
 
 		return response;
+	}
+
+	@Override
+	public long getPatientsCount() {
+		return patientRepository.count();
 	}
 
 }

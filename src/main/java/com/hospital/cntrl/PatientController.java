@@ -54,8 +54,8 @@ public class PatientController {
 
 	@PostMapping("/updatepatientRecord")
 	public boolean updatePatient(@RequestBody PatientReqDto patientsReqDto) {
-		boolean isAdded = patientService.updatePatient(patientsReqDto);
-		return isAdded;
+		boolean isUpdate = patientService.updatePatient(patientsReqDto);
+		return isUpdate;
 	}
 
 	@GetMapping("/searchbyName/{name}/{status}/{userId}")
@@ -80,5 +80,10 @@ public class PatientController {
 	public PageResponse<PatientResDto> findAllInActivePatient(@PathVariable int page, @PathVariable int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		return patientService.findAllInActivePatient(pageable);
+	}
+
+	@GetMapping("/count")
+	public long getPatientsCount() {
+		return patientService.getPatientsCount();
 	}
 }

@@ -18,18 +18,18 @@ import lombok.Setter;
 @Entity
 @Table(name = "user_table")
 public class Login {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", nullable = false)
 	private int id;
 
-	@Column(name = "username")
+	@Column(name = "username", nullable = false)
 	private String username;
 
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "role")
+	@Column(name = "role", nullable = false)
 	private String role;
-
 }

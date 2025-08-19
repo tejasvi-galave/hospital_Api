@@ -28,4 +28,6 @@ public interface AppointmentService {
 	PageResponse<AppointmentResDto> getAppointmentByUserId(int userId, Pageable pageable);
 
 	List<AppointmentResDto> searchAppointmentByPhoneAndDoctorId(String phone, int doctorId);
+
+	long getDoctorCount();
 }

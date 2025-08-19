@@ -25,5 +25,7 @@ public class DoctorRequestDto {
 	private LocalTime fromTime;
 	@DateTimeFormat(pattern = "H:M")
 	private LocalTime toTime;
+	private int userId;
+	private String status;
 
 }

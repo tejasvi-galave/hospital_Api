@@ -33,6 +33,12 @@ public class Receptionist {
 	@Column(name = "phone", nullable = false)
 	private String phone;
 
-	@Column(name = "dob")
+	@Column(name = "dob", nullable = false)
 	private String dob;
+
+	@Column(name = "user_id", nullable = false)
+	private int userId;
+
+	@Column(name = "status", nullable = false)
+	private String status;
 }
