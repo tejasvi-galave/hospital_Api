@@ -40,7 +40,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
 	@Override
 	public PageResponse<DiagnosisResDto> getDiagnosisByUserId(Pageable pageable, int userId) {
-		Page<Diagnosis> diagnosisList = diagnosisRepository.findByStatus(pageable, userId, "Active");
+		Page<Diagnosis> diagnosisList = diagnosisRepository.findByUserIdAndStatus(pageable, userId, "Active");
 		List<DiagnosisResDto> dtoList = diagnosisList.stream().map(diagnosis -> diagnosisMapper.toDto(diagnosis))
 				.collect(Collectors.toList());
 		PageResponse<DiagnosisResDto> response = new PageResponse<>();
